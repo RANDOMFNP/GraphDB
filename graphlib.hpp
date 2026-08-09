@@ -1,8 +1,13 @@
 #pragma once
 
+#ifndef GRAPHLIB_HPP
+#define GRAPHLIB_HPP
+
 #include <bits/stdc++.h>
 
-using namespace std;
+void create_graph(const std::unordered_map<int, std::vector<int>>& graph, std::string output_file);
+void add_nodes(const std::unordered_map<int, std::vector<int>>& graph, std::string input_file);
+void delete_node(const std::string& node_to_delete, const std::string& input_file);
+void print_graph(const std::string& filename);
 
-void create_graph(unordered_map<int, vector<int>> graph, string output_file);
-void add_nodes(unordered_map<int, vector<int>> graph, string input_file);
+#endif
