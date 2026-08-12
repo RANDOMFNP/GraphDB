@@ -7,26 +7,26 @@ using namespace std;
 void delete_instances(const string& node_to_delete, const string& input_file) {
     vector<string> lines; 
     string line;
-    regex nodetodeletepattern(node_to_delete);
+    regex nodetodeletepattern("^Node " + node_to_delete + "\\b");
+    regex nodetodeletepattern2("\\bNode " + node_to_delete + "\\b");
+    regex removetrailingcomma(",\\s*\\r?$");
     ifstream in(input_file);
 
     while (getline(in, line)) {
-        if (!regex_search(line, nodetodeletepattern)) {
-            lines.push_back(line);
+        if (regex_search(line, nodetodeletepattern)) {
+            continue;
         }
+        string cleaned = regex_replace(line, nodetodeletepattern2, "");
+        cleaned = regex_replace(cleaned, removetrailingcomma, "");
+        lines.push_back(cleaned);
     }
     in.close();
 
-    auto it = find(lines.begin(), lines.end(), node_to_delete);
-    int index = distance(lines.begin(), it);
-
-    if (index == lines.size()) {
-        return;
-    }
-
     ofstream out(input_file);
-    for (int i = 0; i < lines.size(); i++) {
-        if (i != index) out << lines[i] << "\n";
+    for (const string& remaining_line : lines) {
+        if (!remaining_line.empty()) {
+            out << remaining_line << "\n";
+        }
     }
     out.close();
 }
