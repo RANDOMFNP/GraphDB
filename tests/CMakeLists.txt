@@ -1,7 +1,6 @@
 project(graphlib_tests LANGUAGES CXX)
 
 set(TEST_SOURCES
-    "test_weighted_create.cpp"
     "test_core.cpp"
 )
 

@@ -61,8 +61,8 @@ template<typename node>
 std::vector<node> bfs_algorithm(node starting_node, std::string input_file);
 }
 
-#include "../detail/txt_to_un_map.cpp"
-#include "../detail/txt_to_un_map_weighted.cpp"
+#include "../detail/txt_to_un_map.tpp"
+#include "../detail/txt_to_un_map_weighted.tpp"
 
 #include "../detail/add_nodes.tpp"
 #include "../detail/add_nodes_weighted.tpp"

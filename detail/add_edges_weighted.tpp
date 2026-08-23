@@ -20,6 +20,5 @@ void add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::st
         }
     }
     create_graph<node, weights>(graph, input_file);
-    }
 }
 }

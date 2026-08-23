@@ -10,11 +10,12 @@ void add_edge(std::vector<node> new_value, node key, std::string input_file) {
 
     if (g_it == graph.end()) {
         std::cout << "Key doesnt exist" << std::endl;
+        return;
     }
 
     for (auto neighbor : new_value) {
-        if (std::find(g_it->second.begin(), it->second.end(), neighbor) == it->second.end()) {
-            it->second.push_back(neighbor)
+        if (std::find(g_it->second.begin(), g_it->second.end(), neighbor) == g_it->second.end()) {
+            g_it->second.push_back(neighbor);
         }
     }
     create_graph<node>(graph, input_file);
