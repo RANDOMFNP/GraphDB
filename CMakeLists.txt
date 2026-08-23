@@ -3,11 +3,13 @@ project(graphlib VERSION 0.1.0 LANGUAGES C CXX)
 
 option(BUILD_TESTS "Build project tests" OFF)
 
-file(GLOB GRAPH_SOURCES "src/*.cpp")
+file(GLOB GRAPH_SOURCES "detail/*.tpp")
 
-add_library(graphlib ${GRAPH_SOURCES})
+add_library(graphlib INTERFACE)
 
-target_include_directories(graphlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_features(graphlib INTERFACE cxx_std_23)
+
+target_include_directories(graphlib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 if(BUILD_TESTS)
     include(CTest)
