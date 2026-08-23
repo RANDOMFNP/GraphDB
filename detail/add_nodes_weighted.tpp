@@ -3,7 +3,7 @@ namespace graphlib {
 template<typename node, typename weights>
 
 requires Number<weights>
-void add_nodes(const std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, std::string input_file) {
+void add_nodes(const std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, const std::string& input_file) {
     std::ofstream file(input_file, std::ios::app);
 
     std::vector<node> NodeName;

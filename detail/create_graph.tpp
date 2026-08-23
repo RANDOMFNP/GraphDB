@@ -2,7 +2,7 @@ namespace graphlib {
 
 template<typename node>
 
-void create_graph(const std::unordered_map<node, std::vector<node>>& graph, std::string output_file) {
+void create_graph(const std::unordered_map<node, std::vector<node>>& graph, const std::string& output_file) {
 
     std::ofstream file(output_file);
 

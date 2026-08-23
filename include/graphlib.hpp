@@ -25,9 +25,9 @@ template<typename T>
 concept Number = std::integral<T> || std::floating_point<T>;
 
 template<typename node>
-void create_graph(const std::unordered_map<node, std::vector<node>>& graph, std::string output_file);
+void create_graph(const std::unordered_map<node, std::vector<node>>& graph, const std::string& output_file);
 template<typename node>
-void add_nodes(const std::unordered_map<node, std::vector<node>>& graph, std::string input_file);
+void add_nodes(const std::unordered_map<node, std::vector<node>>& graph, const std::string& input_file);
 template<typename node>
 void delete_instances(const std::string& node_to_delete, const std::string& input_file);
 
@@ -35,18 +35,18 @@ void print_graph(const std::string& filename);
 
 template<typename node, typename weights>
 requires Number<weights>
-void create_graph(const std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, std::string output_file);
+void create_graph(const std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, const std::string& output_file);
 template<typename node, typename weights>
 requires Number<weights>
-void add_nodes(const std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, std::string input_file);
+void add_nodes(const std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, const std::string& input_file);
 
 void delete_instances_weighted(const std::string& node_to_delete, const std::string& input_file);
 
 template<typename node, typename weights>
 requires Number<weights>
-void add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::string input_file);
+void add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, const std::string& input_file);
 template<typename node>
-void add_edge(std::vector<node> new_value, node key, std::string input_file);
+void add_edge(const std::vector<node>& new_value, const node& key, const std::string& input_file);
 
 template<typename node>
 std::unordered_map<node, std::vector<node>> parse(const std::string& input_file);
@@ -56,9 +56,9 @@ requires Number<weights>
 std::unordered_map<node, std::vector<std::pair<node, weights>>> parse_weighted(const std::string& input_file);
 
 template<typename node>
-std::vector<node> dfs_algorithm(node starting_value, std::string input_file);
+std::vector<node> dfs_algorithm(const node& starting_value, const std::string& input_file);
 template<typename node>
-std::vector<node> bfs_algorithm(node starting_node, std::string input_file);
+std::vector<node> bfs_algorithm(const node& starting_node, const std::string& input_file);
 }
 
 #include "../detail/txt_to_un_map.tpp"

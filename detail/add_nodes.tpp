@@ -2,7 +2,7 @@ namespace graphlib {
 
 template<typename node>
 
-void add_nodes(const std::unordered_map<node, std::vector<node>>& graph, std::string input_file) {
+void add_nodes(const std::unordered_map<node, std::vector<node>>& graph, const std::string& input_file) {
     std::ofstream file(input_file, std::ios::app);
 
     std::vector<node> NodeName;

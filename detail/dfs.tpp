@@ -4,7 +4,7 @@ namespace graphlib {
 
 template<typename node>
 
-std::vector<node> dfs_algorithm(node starting_value, std::string input_file) {
+std::vector<node> dfs_algorithm(const node& starting_value, const std::string& input_file) {
     std::unordered_set<node> visited;
     std::stack<node> stack_of_numbers;
     std::unordered_map<node, std::vector<node>> graph;
@@ -29,10 +29,10 @@ std::vector<node> dfs_algorithm(node starting_value, std::string input_file) {
         if (it == graph.end()) {
             continue;
         }
-            for (auto neighbor : it->second) {
-                stack_of_numbers.push(neighbor);
-            }
+        for (const auto& neighbor : it->second) {
+            stack_of_numbers.push(neighbor);
         }
+    }
     return return_vector;
 }
 }

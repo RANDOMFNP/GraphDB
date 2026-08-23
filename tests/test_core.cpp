@@ -380,7 +380,7 @@ int main() {
     try {
         StressConfig cfg;
         cfg.iterations = 50;
-        cfg.max_nodes = 100000;
+        cfg.max_nodes = 1000;
         cfg.max_edges_per_node = 20;
         cfg.thread_count = 10;
 

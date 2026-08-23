@@ -5,7 +5,7 @@ namespace graphlib {
 template<typename node, typename weights>
 
 requires Number<weights>
-std::vector<node> dijkstras_algorithm(node starting_node, std::string input_file) {
+std::vector<node> dijkstras_algorithm(const node starting_node, const std::string& input_file) {
     std::unordered_map<node, std::vector<std::pair<node, weights>>> graph;
     graph = parse_weighted<node, weights>(input_file);
 

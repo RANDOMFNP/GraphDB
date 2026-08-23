@@ -4,7 +4,7 @@ namespace graphlib {
 
 template<typename node>
 
-std::vector<node> bfs_algorithm(node starting_node, std::string input_file) {
+std::vector<node> bfs_algorithm(const node& starting_node, const std::string& input_file) {
     std::unordered_map<node, std::vector<node>> graph;
     graph = parse<node>(input_file);
 
@@ -25,7 +25,7 @@ std::vector<node> bfs_algorithm(node starting_node, std::string input_file) {
             continue;
         }
 
-        for (auto neighbor : g_it->second) {
+        for (const auto& neighbor : g_it->second) {
             if (visited.find(neighbor) == visited.end()) {
                 visited.insert(neighbor);
                 q.push(neighbor);
