@@ -1,9 +1,27 @@
 #include "graphlib.hpp"
-#include <bits/stdc++.h>
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include <concepts>
+#include <utility>
+#include <regex>
+#include <stack>
+#include <queue>
+#include <unordered_set>
+#include <utility>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <stdexcept>
+#include <random>
 #include <chrono>
 #include <thread>
+#include <atomic>
 
 using namespace std;
+
+// forward declaration for tests in test_d_and_g_n.cpp (merged runner)
+extern int run_d_and_g_n_tests();
 
 namespace {
 
@@ -410,6 +428,11 @@ int main() {
                   << " rss_mb=" << (get_rss_bytes() / 1024 / 1024) << std::endl;
 
         std::cout << "Stress tests completed successfully." << std::endl;
+
+        // run additional tests from tests/test_d_and_g_n.cpp
+        int rc = run_d_and_g_n_tests();
+        if (rc != 0) return rc;
+
         return 0;
     } catch (const std::exception& ex) {
         std::cerr << ex.what() << std::endl;

@@ -1,6 +1,6 @@
 namespace graphlib {
 
-void delete_instances_weighted(const std::string& node_to_delete, const std::string& input_file) {
+inline void delete_instances_weighted(const std::string& node_to_delete, const std::string& input_file) {
     std::vector<std::string> lines; 
     std::string line;
     std::regex nodetodeletepattern("^Node " + node_to_delete + "\\b");
