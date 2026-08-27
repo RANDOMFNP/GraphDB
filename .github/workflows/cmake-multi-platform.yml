@@ -39,13 +39,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # 1. Install Ninja across all operating systems
-    - name: Install Ninja
-      uses: aszymczyk/setup-ninja@v1
-      with:
-        version: '1.11.1'
-
-    # 2. Set up Developer Command Prompt explicitly for MSVC (cl) on Windows
+    # Set up Developer Command Prompt explicitly for MSVC (cl) on Windows
     - name: Set up MSVC Developer Command Prompt
       if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1
@@ -56,7 +50,7 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    # 3. Added -G Ninja and language standard enforcement flags
+    # Added -G Ninja and language standard enforcement flags
     - name: Configure CMake
       run: >
         cmake -G Ninja -B ${{ steps.strings.outputs.build-output-dir }}
@@ -70,7 +64,7 @@ jobs:
     - name: Build
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-    # 4. Added --output-on-failure so you can see exactly why a test fails in the logs
+    # Added --output-on-failure so you can see exactly why a test fails in the logs
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: ctest --build-config ${{ matrix.build_type }} --output-on-failure
