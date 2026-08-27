@@ -26,12 +26,12 @@ __NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if 
 
 ### Using clang
 
-Example usage: `clang++ program.cpp -I graphlib/include/ -I ./graphlib/detail/ -o program, make sure to include graphlib/include/ and graphlib/detail/
+Example usage: `clang++ program.cpp -I graphlib/include/ -I ./graphlib/detail/ -o program`, make sure to include graphlib/include/ and graphlib/detail/
 __NOTE:__ This is C++ 20 (but soon to be 23) library and will not function if you are on too old of a clang compiler, we recommend clang 14 as a minimum
 
 ### Using MSVC
 
-Example usage: `cl.exe /EHsc program.cpp /Fe:program.exe
+Example usage: `cl.exe /EHsc program.cpp /Fe:program.exe`
 __NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if you are using too old of an MVSC compile, we recommend MSVC 19.44 as a minimum
 
 ## Functions
