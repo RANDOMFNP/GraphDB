@@ -9,7 +9,7 @@ void add_edge(const std::vector<node>& new_value, const node& key, const std::st
     auto g_it = graph.find(key);
 
     if (g_it == graph.end()) {
-        std::cout << "Key doesnt exist" << std::endl;
+        std::cout << "Key doesnt exist" << "\n";
         return;
     }
 

@@ -5,6 +5,9 @@
 
 using namespace std;
 
+// forward declaration for tests in test_d_and_g_n.cpp (merged runner)
+extern int run_d_and_g_n_tests();
+
 namespace {
 
 std::atomic<uint64_t> g_checks_done{0};
@@ -410,6 +413,11 @@ int main() {
                   << " rss_mb=" << (get_rss_bytes() / 1024 / 1024) << std::endl;
 
         std::cout << "Stress tests completed successfully." << std::endl;
+
+        // run additional tests from tests/test_d_and_g_n.cpp
+        int rc = run_d_and_g_n_tests();
+        if (rc != 0) return rc;
+
         return 0;
     } catch (const std::exception& ex) {
         std::cerr << ex.what() << std::endl;
