@@ -1,4 +1,4 @@
-# Graphlib
+# Graphlib 🇬
 Graphlib is a C++ library that empowers users to create and edit graphs!
 
 If you want to contribute to GRAPHLIB, check out the CONTRIBUTING.md file!
@@ -13,11 +13,11 @@ Switched license from AGPL v3 to Apache 2.0
 Here I will post some of the best first issues I see and its status
 * https://github.com/RANDOMFNP/Graphlib/issues/2 -- Inefficiencies
 
-## Importing Graphlib
+## Importing Graphlib 📦
 
 For most applications, `#include "graphlib.hpp"` will suffice.
 
-## Linking without CMake
+## Linking without CMake 📦
 
 ### Using g++
 
