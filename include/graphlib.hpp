@@ -32,6 +32,7 @@ template<typename node>
 void delete_instances(const std::string& node_to_delete, const std::string& input_file);
 
 void print_graph(const std::string& filename);
+void graphlib_version();
 
 template<typename node, typename weights>
 requires Number<weights>
@@ -56,14 +57,26 @@ requires Number<weights>
 std::unordered_map<node, std::vector<std::pair<node, weights>>> parse_weighted(const std::string& input_file);
 
 template<typename node>
+std::vector<node> get_neighbors(const node& key, std::unordered_map<node, std::vector<node>>& graph);
+
+template<typename node, typename weights>
+std::vector<node> get_neighbors(const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
+
+template<typename node>
 std::vector<node> dfs_algorithm(const node& starting_value, const std::string& input_file);
 template<typename node>
 std::vector<node> bfs_algorithm(const node& starting_node, const std::string& input_file);
+template<typename node, typename weights>
+
+requires Number<weights>
+std::vector<node> dijkstras_algorithm(const node starting_node, const std::string& input_file);
 }
 
 #include "../detail/txt_to_un_map.tpp"
 #include "../detail/txt_to_un_map_weighted.tpp"
 
+#include "../detail/get_neighbors.tpp"
+#include "../detail/get_neighbors_weighted.tpp"
 #include "../detail/add_nodes.tpp"
 #include "../detail/add_nodes_weighted.tpp"
 #include "../detail/create_graph.tpp"
@@ -77,5 +90,6 @@ std::vector<node> bfs_algorithm(const node& starting_node, const std::string& in
 #include "../detail/bfs.tpp"
 #include "../detail/dijkstra.tpp"
 #include "../detail/print_graph.tpp"
+#include "../detail/print_version.tpp"
 
 #endif
