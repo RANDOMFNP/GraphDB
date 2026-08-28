@@ -6,7 +6,7 @@ If you want to contribute to GRAPHLIB, check out the CONTRIBUTING.md file!
 If this product helped you, please leave a star!
 If it doesn't, tell me whats wrong, I respond to issues within 1-3 days!
 
-DISCLAIMER: If this is a fork, the main repository is github.com/randomfnp/graphlib, come check it out!
+DISCLAIMER: If this is a fork, the main repository is [github.com/randomfnp/graphlib](https://github.com/randomfnp/graphlib) come check it out!
 
 ## NEWS
 Switched license from AGPL v3 to Apache 2.0
