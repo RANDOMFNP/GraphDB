@@ -1,3 +1,7 @@
+// Generated with assistance from artificial intelligence
+
+// CONTRIBUTORS: @TrueFurina
+
 #include "graphlib.hpp"
 #include <unordered_map>
 #include <vector>
