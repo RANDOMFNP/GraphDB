@@ -48,8 +48,12 @@ The weighted version of create_graph() creates the initial graph containing the 
 
 ### `graphlib::add_nodes(std::unordered_map<node, std::vector<node>> graph, std::string input_file)`
 add_nodes() appends `graph` to the end of a file.
+### `void add_edge(const std::vector<node>& new_value, const node& key, std::unordered_map<node, std::vector<node>>& graph, std::string& input_file)`
+The in-memory version of add_edge takes all the normal arguments but the graph is taken as an argument as well.
 ### `graphlib::add_nodes(std::unordered_map<node, std::vector<std::pair<node, weight> graph, std::string input_file)`
 The weighted version of add_nodes() appends `graph` to the end of a file.
+### `void add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, std::string input_file)`
+The in-memory and weighted version of add_edge takes all the normal arguments but the graph is taken as an argument as well.
 
 ### `graphlib::delete_instances(std::string node_to_delete, std::string input_file)`
 delete_instances() removes all instances of `node_to_delete` from the file.
@@ -73,10 +77,18 @@ print_graph() prints out the contents of a file.
 
 ### `graphlib::bfs_algorithm(node starting_node, std::string input_file)`
 bfs_algorithm() runs BFS starting from `starting_node` to the end of the file.
+### `std::vector<node> bfs_algorithm(node starting_node, std::unordered_map<node, std::vector<node>> graph)
+The in-memory version of bfs_algorithm() runs BFS but takes the graph as an argument instead of the input file
 ### `graphlib::dfs_algorithm(node starting_node, std::string input_file)`
 dfs_algorithm() runs DFS starting from `starting_node` to the end of the file.
-
-## Soon to be added
-
+### `std::vector<node> dfs_algorithm(node starting_value, std::unordered_map<node, std::vector<node>> graph)`
+The in-memory version of dfs_algorithm() runs DFS but takes the graph as an argument instead of the input file
 ### `graphlib::dijkstras_algorithm(node starting_node, std::string input_file)`
 dijkstras_algorithm() runs Dijkstra's algorithm from `starting_node` to the end of the file.
+### `std::vector<node> dijkstras_algorithm(node starting_node, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph)`
+The in-memory version of dijkstras_algorithm() runs Dijkstra's algorithm but takes the graph as an argument instead of the input file
+
+### `std::vector<node> get_neighbors(node key, std::unordered_map<node, std::vector<node>> graph)`
+get_neighbors() gets the neighbors of a certain key
+### `std::vector<node> get_neighbors(node key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph)`
+The weighted version of get_neighbors gets the neighbors of a certain key
