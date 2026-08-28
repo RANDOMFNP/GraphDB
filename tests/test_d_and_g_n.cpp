@@ -1,3 +1,7 @@
+// Created with the assistance of Artificial Intelligence
+
+// CONTRIBUTORS: @TrueFurina
+
 #include <unordered_map>
 #include <vector>
 #include <string>
