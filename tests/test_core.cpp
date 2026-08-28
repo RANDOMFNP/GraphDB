@@ -17,6 +17,7 @@
 #include <chrono>
 #include <thread>
 #include <atomic>
+#include <cstdlib>
 
 using namespace std;
 
@@ -74,7 +75,10 @@ std::string unique_temp_path(const std::string& name) {
     const auto now = std::chrono::steady_clock::now().time_since_epoch().count();
     static std::atomic<uint64_t> counter{0};
     const auto id = counter.fetch_add(1);
-    return "/tmp/graphlib_" + name + "_" + std::to_string(now) + "_" + std::to_string(id) + ".txt";
+    const char* tmp = std::getenv("TEMP");
+    if (tmp == nullptr || *tmp == '\0') tmp = std::getenv("TMP");
+    if (tmp == nullptr || *tmp == '\0') tmp = "/tmp";
+    return std::string(tmp) + "/graphlib_" + name + "_" + std::to_string(now) + "_" + std::to_string(id) + ".txt";
 }
 
 template<typename V>
