@@ -91,4 +91,4 @@ The in-memory version of dijkstras_algorithm() runs Dijkstra's algorithm but tak
 ### `get_neighbors(node key, std::unordered_map<node, std::vector<node>> graph)`
 get_neighbors() gets the neighbors of a certain key
 ### `get_neighbors(node key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph)`
-The weighted version of get_neighbors gets the neighbors of a certain key
+The weighted version of get_neighbors() gets the neighbors of a certain key
