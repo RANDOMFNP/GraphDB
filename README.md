@@ -1,5 +1,4 @@
-# Graphlib, the one stop, C++ 23/20, header-only library for directional (and soon undirectional) graphs!
-
+# Graphlib 🇬
 Graphlib is a C++ library that empowers users to create and edit graphs!
 
 If you want to contribute to GRAPHLIB, check out the CONTRIBUTING.md file!
