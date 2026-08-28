@@ -70,6 +70,21 @@ template<typename node, typename weights>
 
 requires Number<weights>
 std::vector<node> dijkstras_algorithm(const node starting_node, const std::string& input_file);
+
+// In memory
+template<typename node, typename weights>
+requires Number<weights>
+void add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
+template<typename node>
+void add_edge(const std::vector<node>& new_value, const node& key, std::unordered_map<node, std::vector<node>>& graph);
+
+template<typename node>
+std::vector<node> bfs_algorithm(const node& starting_node, std::unordered_map<node, std::vector<node>>& graph);
+template<typename node>
+std::vector<node> dfs_algorithm(const node& starting_value, const std::unordered_map<node, std::vector<node>>& graph);
+template<typename node, typename weights>
+requires Number<weights>
+std::vector<node> dijkstras_algorithm(const node starting_node, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
 }
 
 #include "../detail/txt_to_un_map.tpp"

@@ -1,4 +1,3 @@
-// Generated with the assistance of Artificial intelligence
 #include <unordered_map>
 #include <vector>
 #include <string>

@@ -21,4 +21,24 @@ void add_edge(const std::vector<std::pair<node, weights>>& new_value, const node
     }
     create_graph<node, weights>(graph, input_file);
 }
+
+template<typename node, typename weights>
+
+requires Number<weights>
+void add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, std::string& input_file) {
+    auto g_it = graph.find(key);
+
+    if (g_it == graph.end()) {
+        std::cout << "Key doesnt exist" << "\n";
+        return;
+    }
+
+    for (const auto &[neighbor, weight] : new_value) {
+        auto ex = std::find_if(g_it->second.begin(), g_it->second.end(), [neighbor](auto edge) {return edge.first == neighbor;});
+        if (ex == g_it->second.end()) {
+            g_it->second.push_back({neighbor, weight});
+        }
+    }
+    create_graph<node, weights>(graph, input_file);
+}
 }
