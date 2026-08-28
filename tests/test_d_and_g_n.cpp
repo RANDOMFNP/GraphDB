@@ -1,6 +1,4 @@
 // Generated with the assistance of Artificial intelligence
-// CONTRIBUTORS: @TrueFurina
-
 #include <unordered_map>
 #include <vector>
 #include <string>
