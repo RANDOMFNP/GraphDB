@@ -1,4 +1,4 @@
-// Created with the assistance of Artificial Intelligence
+// AI was used in the making of this test
 
 // CONTRIBUTORS: @TrueFurina
 
@@ -103,7 +103,7 @@ int run_d_and_g_n_tests() {
                 auto itg = ug.begin(); advance(itg, pick_idx);
                 int key = itg->first;
                 auto res = graphlib::get_neighbors<int>(key, ug);
-                if (!same_vector_contents(res, ug[key])) {
+                if (!res.has_value() || !same_vector_contents(res.value(), ug[key])) {
                     cerr << "get_neighbors (unweighted) mismatch on iteration " << it << "\n";
                     return 2;
                 }
@@ -128,12 +128,15 @@ int run_d_and_g_n_tests() {
                 auto got = graphlib::get_neighbors<int,int>(key, wg);
                 vector<int> expected;
                 for (const auto &p : wg[key]) expected.push_back(p.first);
-                if (!same_vector_contents(got, expected)) {
+                if (!got.has_value() || !same_vector_contents(got.value(), expected)) {
                     cerr << "get_neighbors (weighted) returned unexpected values on iteration " << it << "\n";
                     cerr << "expected first few: ";
                     for (size_t i=0;i<min<size_t>(expected.size(),5);++i) cerr<<expected[i]<<" "; cerr<<"\n";
                     cerr << "got first few: ";
-                    for (size_t i=0;i<min<size_t>(got.size(),5);++i) cerr<<got[i]<<" "; cerr<<"\n";
+                    if (got.has_value()) {
+                        for (size_t i=0;i<min<size_t>(got.value().size(),5);++i) cerr<<got.value()[i]<<" ";
+                    }
+                    cerr<<"\n";
                     return 3;
                 }
             }
@@ -147,7 +150,7 @@ int run_d_and_g_n_tests() {
                 auto itw = wg.begin(); advance(itw, pick_idx);
                 int start = itw->first;
 
-                auto lib_order = graphlib::dijkstras_algorithm<int,int>(start, file);
+                auto lib_order = graphlib::dijkstras_algorithm<int,int>(start, wg);
                 auto local_order = local_dijkstra(wg, start);
 
                 if (lib_order != local_order) {

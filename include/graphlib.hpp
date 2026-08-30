@@ -16,6 +16,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <optional>
 #include <stdexcept>
 
 namespace graphlib {
@@ -45,9 +46,9 @@ void delete_instances_weighted(const std::string& node_to_delete, const std::str
 
 template<typename node, typename weights>
 requires Number<weights>
-void add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, const std::string& input_file);
+std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, const std::string& input_file);
 template<typename node>
-void add_edge(const std::vector<node>& new_value, const node& key, const std::string& input_file);
+std::optional<std::unordered_map<node, std::vector<node>>> add_edge(const std::vector<node>& new_value, const node& key, const std::string& input_file);
 
 template<typename node>
 std::unordered_map<node, std::vector<node>> parse(const std::string& input_file);
@@ -57,10 +58,10 @@ requires Number<weights>
 std::unordered_map<node, std::vector<std::pair<node, weights>>> parse_weighted(const std::string& input_file);
 
 template<typename node>
-std::vector<node> get_neighbors(const node& key, std::unordered_map<node, std::vector<node>>& graph);
+std::optional<std::vector<node>> get_neighbors(const node& key, std::unordered_map<node, std::vector<node>>& graph);
 
 template<typename node, typename weights>
-std::vector<node> get_neighbors(const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
+std::optional<std::vector<node>> get_neighbors(const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
 
 template<typename node>
 std::vector<node> dfs_algorithm(const node& starting_value, const std::string& input_file);
@@ -74,9 +75,9 @@ std::vector<node> dijkstras_algorithm(const node starting_node, const std::strin
 // In memory
 template<typename node, typename weights>
 requires Number<weights>
-void add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
+std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
 template<typename node>
-void add_edge(const std::vector<node>& new_value, const node& key, std::unordered_map<node, std::vector<node>>& graph);
+std::optional<std::unordered_map<node, std::vector<node>>> add_edge(const std::vector<node>& new_value, const node& key, std::unordered_map<node, std::vector<node>>& graph);
 
 template<typename node>
 std::vector<node> bfs_algorithm(const node& starting_node, std::unordered_map<node, std::vector<node>>& graph);
@@ -85,6 +86,18 @@ std::vector<node> dfs_algorithm(const node& starting_value, const std::unordered
 template<typename node, typename weights>
 requires Number<weights>
 std::vector<node> dijkstras_algorithm(const node starting_node, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph);
+
+template<typename node, typename weights>
+requires Number<weights>
+std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, node key1, node key2, std::string input_file);
+template <typename node, typename weights>
+requires Number<weights>
+std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(node key1, node key2, std::string input_file);
+
+template <typename node>
+std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(std::unordered_map<node, std::vector<node>>& graph, node key1, node key2, std::string input_file);
+template <typename node>
+std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file);
 }
 
 #include "../detail/txt_to_un_map.tpp"
@@ -104,6 +117,10 @@ std::vector<node> dijkstras_algorithm(const node starting_node, std::unordered_m
 #include "../detail/dfs.tpp"
 #include "../detail/bfs.tpp"
 #include "../detail/dijkstra.tpp"
+
+#include "../detail/undirected_2_edges.tpp"
+#include "../detail/undirected_2_edges_weighted.tpp"
+
 #include "../detail/print_graph.tpp"
 #include "../detail/print_version.tpp"
 

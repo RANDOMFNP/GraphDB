@@ -3,8 +3,6 @@ project(graphlib VERSION 0.1.0 LANGUAGES C CXX)
 
 option(BUILD_TESTS "Build project tests" OFF)
 
-file(GLOB GRAPH_SOURCES "detail/*.tpp")
-
 add_library(graphlib INTERFACE)
 
 target_compile_features(graphlib INTERFACE cxx_std_23)
