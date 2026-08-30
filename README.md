@@ -6,6 +6,8 @@ If you want to contribute to GRAPHLIB, check out the CONTRIBUTING.md file!
 If this product helped you, please leave a star!
 If it doesn't, tell me whats wrong, I respond to issues within 1-3 days!
 
+### READEME.md UPDATES EVERY DAY AFTER A VERSION IS PUBLISHED
+
 ## NEWS
 Switched license from AGPL v3 to Apache 2.0
 
