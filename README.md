@@ -36,46 +36,92 @@ __NOTE:__ This is C++ 20 (but soon to be 23) library and will not function if yo
 ### Using MSVC
 
 Example usage: `cl.exe /EHsc program.cpp /Fe:program.exe`
-__NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if you are using too old of an MVSC compile, we recommend MSVC 19.44 as a minimum
+__NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if you are using too old of an MVSC compiler, we recommend MSVC 19.44 as a minimum
 
 ## Functions
 
 * node: AnyType
-* weight: int/float
+* weight: int/float/numerical
 
-### `graphlib::create_graph(std::unordered_map<node, std::vector<node>> graph, std::string output_file)`
-create_graph() creates the initial graph containing the first node vector node pairs.
-### `graphlib::create_graph(std::unordered_map<node, std::vector<std::pair<node, weight>>> graph, std::string output_file)`
-The weighted version of create_graph() creates the initial graph containing the first node vector node weight pairs.
 
-### `graphlib::add_nodes(std::unordered_map<node, std::vector<node>> graph, std::string input_file)`
-add_nodes() appends `graph` to the end of a file.
-### `graphlib::add_nodes(std::unordered_map<node, std::vector<std::pair<node, weight> graph, std::string input_file)`
-The weighted version of add_nodes() appends `graph` to the end of a file.
+### `void add_nodes(std::unordered_map<node, std::vector<node>> graph, std::string input_file);
+Adds a node to a graph.
 
-### `graphlib::delete_instances(std::string node_to_delete, std::string input_file)`
-delete_instances() removes all instances of `node_to_delete` from the file.
-### `graphlib::delete_instances_weighted(std::string node_to_delete, std::string input_file)`
-The weighted version of delete_instances() removes all instances of `node_to_delete` and its weight from the file.
+### `void delete_instances(std::string node_to_delete, std::string input_file);
+Deletes instances of a node.
 
-### `graphlib::add_edge(std::vector<node>, node key, std::string input_file)`
-add_edge() appends the vector of nodes to the vector at location `key` and then writes it to the file.
-### `graphlib::add_edge(std::vector<std::pair<node, weight> node key, std::string input_file)`
-The weighted version of add_edge() appends the vector of nodes to the vector at location `key` and then writes it to the file.
+### `void print_graph(std::string filename);
+Prints the graph.
 
-### `graphlib::parse<type1(node)>(std::string input_file)`
-parse<type>() opens a file and returns a std::unordered_map<node, std::vector<node>>.
-### `graphlib::parse_weighted<type1(node), type2(weight)>(std::string input_file)`
-parse<type, weight>() opens a file with weights and returns a std::unordered_map<node, std::vector<std::pair<node, weight>>>.
+### `void graphlib_version();
+Prints the graphlib version.
 
-### `graphlib::print_graph(std::string input_file)`
-print_graph() prints out the contents of a file.
 
-## Algorithms
+### `void create_graph(std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, std::string output_file);
+Creates the initial graph for weighted graphs.
 
-### `graphlib::bfs_algorithm(node starting_node, std::string input_file)`
-bfs_algorithm() runs BFS starting from `starting_node` to the end of the file.
-### `graphlib::dfs_algorithm(node starting_node, std::string input_file)`
-dfs_algorithm() runs DFS starting from `starting_node` to the end of the file.
-### `graphlib::dijkstras_algorithm(node starting_node, std::string input_file)`
-dijkstras_algorithm() runs Dijkstra's algorithm from `starting_node` to the end of the file.
+### `void create_graph(std::unordered_map<node, std::vector<node>> graph, std::string output_file);
+Creates the initial graph for unweighted graphs.
+
+### `void add_nodes(std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, std::string input_file);
+Adds a set of nodes, weights and connections to the graph to the file.
+
+### `void add_nodes(std::unordered_map<node, std::vector<node>> graph, std::string input_file);
+Adds a set of nodes and their connections to the graph
+
+### `void delete_instances_weighted(std::string node_to_delete, std::string input_file);
+Deletes all instances of a certain node in weighted graphs.
+
+### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::string input_file);
+Adds an edge to a weighted graph.
+
+### `std::optional<std::unordered_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, std::string input_file);
+Adds an edge to an unweighted graph
+
+### `std::unordered_map<node, std::vector<node>> parse(std::string input_file);
+Parses a file.
+
+### `std::unordered_map<node, std::vector<std::pair<node, weights>>> parse_weighted(std::string input_file);
+Parses a weighted graph file.
+
+
+### `std::vector<node> dfs_algorithm(node starting_value, std::string input_file);
+Runs DFS over a certain graph.
+### `std::vector<node> bfs_algorithm(node starting_node, std::string input_file);
+Runs BFS over a certain graph.
+### `std::vector<node> dijkstras_algorithm(node starting_node, std::string input_file);
+Runs Dijkstra's algorithm over a certain graph.
+
+## In memory
+
+### `std::optional<std::vector<node>> get_neighbors(node key, std::unordered_map<node, std::vector<node>> graph);
+Gets the neighbors of a key IN MEMORY.
+
+### `std::optional<std::vector<node>> get_neighbors(node key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph);
+Gets the neighbors of a weighted key IN MEMORY.
+
+### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph);
+Adds a weighted edge IN MEMORY.
+
+### `std::optional<std::unordered_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, std::unordered_map<node, std::vector<node>> graph);
+Adds an unweighted edge IN MEMORY.
+
+### `std::vector<node> bfs_algorithm(node starting_node, std::unordered_map<node, std::vector<node>> graph);
+Runs BFS IN MEMORY.
+### `std::vector<node> dfs_algorithm(node starting_value, std::unordered_map<node, std::vector<node>> graph);
+Runs DFS IN MEMORY.
+### std::vector<node> dijkstras_algorithm(node starting_node, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph);
+Runs Dijkstra's algorithm IN MEMORY.
+
+## Undirected
+
+### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, node key1, node key2, std::string input_file)`
+Connects 2 weighted nodes together IN MEMORY.
+### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(node key1, node key2, std::string input_file)`
+Connects 2 weighted nodes together.
+
+
+### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(std::unordered_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);
+Connects 2 nodes together IN MEMORY.
+### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file)`
+Connects 2 nodes together.
