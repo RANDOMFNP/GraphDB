@@ -77,8 +77,5 @@ print_graph() prints out the contents of a file.
 bfs_algorithm() runs BFS starting from `starting_node` to the end of the file.
 ### `graphlib::dfs_algorithm(node starting_node, std::string input_file)`
 dfs_algorithm() runs DFS starting from `starting_node` to the end of the file.
-
-## Soon to be added
-
 ### `graphlib::dijkstras_algorithm(node starting_node, std::string input_file)`
 dijkstras_algorithm() runs Dijkstra's algorithm from `starting_node` to the end of the file.
