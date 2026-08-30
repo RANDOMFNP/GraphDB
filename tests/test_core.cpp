@@ -1,4 +1,4 @@
-// Created with the assistance of Artificial Intelligence
+// AI was used in the making of this test
 
 // CONTRIBUTORS: @TrueFurina
 
@@ -221,19 +221,22 @@ void run_unweighted_stress(int thread_id, const StressConfig& cfg, uint32_t seed
 
             // determine whether key exists before calling (current add_edge prints/returns if missing)
             bool key_exists = (graph.find(key) != graph.end());
-            graphlib::add_edge<int>(new_adj, key, file);
-
+            auto updated = graphlib::add_edge<int>(new_adj, key, graph);
             if (key_exists) {
-                // add_edge appends neighbors (no duplicates) — merge into local model
                 auto &vec = graph[key];
                 for (auto n : new_adj) {
                     if (std::find(vec.begin(), vec.end(), n) == vec.end()) vec.push_back(n);
                 }
-            } else {
-                // add_edge does nothing when key missing (implementation prints and returns)
-                // local graph remains unchanged
             }
 
+            if (key_exists) {
+                check_true(updated.has_value(), "in-memory add_edge should succeed for existing key (unweighted)");
+                check_true(same_graph(updated.value(), graph), "add_edge in-memory result mismatch (unweighted)");
+            } else {
+                check_true(!updated.has_value(), "in-memory add_edge should fail for missing key (unweighted)");
+            }
+
+            graphlib::create_graph<int>(graph, file);
             const auto p3 = graphlib::parse<int>(file);
             check_true(same_graph(p3, graph), "add_edge mismatch (unweighted)");
             g_ops_done.fetch_add(1, std::memory_order_relaxed);
@@ -263,8 +266,8 @@ void run_unweighted_stress(int thread_id, const StressConfig& cfg, uint32_t seed
             auto it = graph.begin();
             std::advance(it, start);
             const int start_key = it->first;
-            auto bfs = graphlib::bfs_algorithm<int>(start_key, file);
-            auto dfs = graphlib::dfs_algorithm<int>(start_key, file);
+            auto bfs = graphlib::bfs_algorithm<int>(start_key, graph);
+            auto dfs = graphlib::dfs_algorithm<int>(start_key, graph);
             check_true(!bfs.empty(), "bfs returned empty unexpectedly (unweighted)");
             g_ops_done.fetch_add(1, std::memory_order_relaxed);
             check_true(!dfs.empty(), "dfs returned empty unexpectedly (unweighted)");
@@ -327,42 +330,26 @@ void run_weighted_stress(int thread_id, const StressConfig& cfg, uint32_t seed) 
             for (int e = 0; e < m; ++e) new_adj.emplace_back(rng() % (N + add_count + 1), weight_dist(rng));
 
             bool key_exists = (graph.find(key) != graph.end());
-            graphlib::add_edge<int, int>(new_adj, key, file);
-
+            auto updated = graphlib::add_edge<int, int>(new_adj, key, graph);
             if (key_exists) {
-                // add_edge appends weighted neighbors (no duplicate neighbor keys) — merge into local model
                 auto &vec = graph[key];
                 for (auto &p : new_adj) {
                     auto ex = std::find_if(vec.begin(), vec.end(), [&](const auto &e) { return e.first == p.first; });
                     if (ex == vec.end()) vec.push_back(p);
                 }
-            } else {
-                // add_edge does nothing when key missing
             }
 
-            const auto p3 = graphlib::parse_weighted<int, int>(file);
-            if (!same_graph(p3, graph)) {
-                std::cerr << "DEBUG: add_edge weighted mismatch\n";
-                std::cerr << "file: " << file << " key: " << key << " key_exists: " << key_exists << "\n";
-                std::cerr << "new_adj:\n";
-                for (auto &pp : new_adj) std::cerr << "  (" << pp.first << "," << pp.second << ")\n";
-                std::cerr << "expected adjacency for key:\n";
-                if (graph.find(key) != graph.end()) {
-                    for (auto &pp : graph[key]) std::cerr << "  (" << pp.first << "," << pp.second << ")\n";
-                } else {
-                    std::cerr << "  <missing>\n";
-                }
-                std::cerr << "actual adjacency for key in file:\n";
-                auto itf = p3.find(key);
-                if (itf != p3.end()) {
-                    for (auto &pp : itf->second) std::cerr << "  (" << pp.first << "," << pp.second << ")\n";
-                } else {
-                    std::cerr << "  <missing>\n";
-                }
-                check_true(false, "add_edge mismatch (weighted)");
+            if (key_exists) {
+                check_true(updated.has_value(), "in-memory add_edge should succeed for existing key (weighted)");
+                check_true(same_graph(updated.value(), graph), "add_edge in-memory result mismatch (weighted)");
             } else {
-                g_ops_done.fetch_add(1, std::memory_order_relaxed);
+                check_true(!updated.has_value(), "in-memory add_edge should fail for missing key (weighted)");
             }
+
+            graphlib::create_graph<int, int>(graph, file);
+            const auto p3 = graphlib::parse_weighted<int, int>(file);
+            check_true(same_graph(p3, graph), "add_edge mismatch (weighted)");
+            g_ops_done.fetch_add(1, std::memory_order_relaxed);
         }
 
         // random delete
@@ -387,7 +374,7 @@ void run_weighted_stress(int thread_id, const StressConfig& cfg, uint32_t seed) 
             auto it = graph.begin();
             std::advance(it, start);
             const int start_key = it->first;
-            auto dres = graphlib::dijkstras_algorithm<int, int>(start_key, file);
+            auto dres = graphlib::dijkstras_algorithm<int, int>(start_key, graph);
             check_true(!dres.empty(), "dijkstra returned empty unexpectedly (weighted)");
             g_ops_done.fetch_add(1, std::memory_order_relaxed);
         }
