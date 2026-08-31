@@ -121,7 +121,7 @@ Connects 2 weighted nodes together IN MEMORY.
 Connects 2 weighted nodes together.
 
 
-### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(std::unordered_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);'
+### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(std::unordered_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);`
 Connects 2 nodes together IN MEMORY.
 ### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file);`'
 Connects 2 nodes together.
