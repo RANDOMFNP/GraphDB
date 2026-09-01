@@ -8,7 +8,7 @@ If it doesn't, tell me whats wrong, I respond to issues within 1-3 days!
 
 ### READEME.md UPDATES EVERY DAY AFTER A VERSION IS PUBLISHED
 
-### NOTE: Within the next week, we will slowly be transitioning to C++23/26 stuff with C++26 the minimum requirement.
+## NOTE: Within the next week, we will slowly be transitioning to C++23/26 stuff with C++26 the minimum requirement.
 
 ## NEWS
 Switched license from AGPL v3 to Apache 2.0
