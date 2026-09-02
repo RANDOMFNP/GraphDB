@@ -35,7 +35,7 @@ target_sources(graphlib INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/detail/undirected_2_edges_weighted.tpp
 )
 
-target_compile_features(graphlib INTERFACE cxx_std_26)
+target_compile_features(graphlib INTERFACE cxx_std_23)
 
 target_include_directories(graphlib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
