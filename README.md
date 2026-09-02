@@ -1,4 +1,4 @@
-# graphdb 🇬
+# GraphDB 🇬
 GraphDB is a C++ library that empowers users to create and edit graphs!
 
 If you want to contribute to GRAPHDB, check out the CONTRIBUTING.md file!
@@ -26,21 +26,21 @@ For most applications, `#include "graphdb.hpp"` will suffice.
 ### Using g++
 
 Example usage: `g++ program.cpp -I graphdb/include/ -I graphdb/detail/ -o program`, make sure to include graphdb/include/ and graphdb/detail/
-__NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if you are on too old of a g++ compiler, we recommend g++ 12 as a minimum
+__NOTE:__ This is a C++ 23 library and will not function if you are on too old of a g++ compiler, we recommend g++ 12 as a minimum
 
 ### Using clang
 
 Example usage: `clang++ program.cpp -I graphdb/include/ -I ./graphdb/detail/ -o program`, make sure to include graphdb/include/ and graphdb/detail/
-__NOTE:__ This is C++ 20 (but soon to be 23) library and will not function if you are on too old of a clang compiler, we recommend clang 14 as a minimum
+__NOTE:__ This is C++ 23 library and will not function if you are on too old of a clang compiler, we recommend clang 14 as a minimum
 
 ### Using MSVC
 
 Example usage: `cl.exe /EHsc program.cpp /Fe:program.exe`
-__NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if you are using too old of an MVSC compiler, we recommend MSVC 19.44 as a minimum
+__NOTE:__ This is a C++ 23 library and will not function if you are using too old of an MVSC compiler, we recommend MSVC 19.44 as a minimum
 
 ## Functions
 
-* node: AnyType
+* node: AnyType/formattable 
 * weight: int/float/numerical
 
 ## NOTE THIS USES THE `graphdb::` namespace so prefix everything here with `graphdb::`
