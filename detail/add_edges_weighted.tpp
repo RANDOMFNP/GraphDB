@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
     
 template<typename node, typename weights>
 
@@ -9,7 +9,6 @@ std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> a
     auto g_it = graph.find(key);
 
     if (g_it == graph.end()) {
-        std::cout << "Key doesnt exist" << "\n";
         return std::nullopt;
     }
 
@@ -29,7 +28,6 @@ std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> a
     auto g_it = graph.find(key);
 
     if (g_it == graph.end()) {
-        std::cout << "Key doesnt exist" << "\n";
         return std::nullopt;
     }
 

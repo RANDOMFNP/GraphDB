@@ -1,31 +1,44 @@
-namespace graphlib {
+namespace graphdb {
 
 template<typename node>
 
-void create_graph(const std::unordered_map<node, std::vector<node>>& graph, const std::string& output_file) {
+    requires std::formattable<node, char>
+void create_graph(const std::unordered_map<node, std::vector<node>>& graph, const std::string& output_file, std::optional<int> buffer_size_in_bytes) {
 
-    std::ofstream file(output_file);
+    std::FILE* file = fopen(output_file.c_str(), "w");
 
-    std::vector<node> NodeName;
-    std::vector<std::vector<node>> NodeConnects;
+    int buf_size;
+    std::string write_buffer;
 
-    for (auto const& [key, value] : graph) {
-        NodeName.push_back(key);
-        NodeConnects.push_back(value);
+    if (!buffer_size_in_bytes.has_value()) {
+        buf_size = 64 * 1024;
+        write_buffer.reserve(64 * 1024);
+    } else {
+        buf_size = buffer_size_in_bytes.value();
+        write_buffer.reserve(buf_size);
     }
 
-    
-    for (int i = 0; i < graph.size(); i++) {
-        file << "Node " << NodeName[i] << "-> ";
+    for (const auto& [NodeName, NodeConnects] : graph) {
+        std::string connections = "";
 
-        for (size_t j = 0; j < NodeConnects[i].size(); j++) {
-            file << "Node " << NodeConnects[i][j];
-            if (j < NodeConnects[i].size() - 1) {
-                file << ", ";
+        for (size_t j = 0; j < NodeConnects.size(); j++) {
+            connections += std::format("Node {}", NodeConnects[j]);
+            if (j < NodeConnects.size() - 1) {
+                connections += ", ";
             }
         }
-        file << "\n";
+        write_buffer += std::format("Node {} -> {}\n", NodeName, connections);
+
+        if (write_buffer.size() >= buf_size) {
+            std::fwrite(write_buffer.data(), 1, write_buffer.size(), file);
+            write_buffer.clear();
+        }
     }
-    file.close();
+
+    if (!write_buffer.empty()) {
+        std::fwrite(write_buffer.data(), 1, write_buffer.size(), file);
+    }
+
+    std::fclose(file);
 }
 }

@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
 
 template<typename node, typename weights>
 
@@ -13,7 +13,7 @@ std::unordered_map<node, std::vector<std::pair<node, weights>>> parse_weighted(c
         std::stringstream ss(cleaned);
 
         node src;
-        if (!(ss >> src)) {
+        if (!(ss >> src)) { 
             continue;
         }
 

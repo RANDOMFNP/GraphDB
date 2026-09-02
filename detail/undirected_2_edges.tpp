@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
 
 template <typename node>
 std::unordered_map<node, std::vector<node>> undirected_connect(node key1, node key2, std::string input_file) {
@@ -17,7 +17,7 @@ std::unordered_map<node, std::vector<node>> undirected_connect(node key1, node k
     return graph;
 }
 
-template <typename node>
+template <typename node> 
 std::unordered_map<node, std::vector<node>> undirected_connect(std::unordered_map<node, std::vector<node>>& graph, node key1, node key2, std::string input_file) {
     auto g_it = graph.find(key1);
     if (g_it != graph.end()) {

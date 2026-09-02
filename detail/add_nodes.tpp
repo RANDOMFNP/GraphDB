@@ -1,30 +1,43 @@
-namespace graphlib {
+namespace graphdb {
 
 template<typename node>
+    requires std::formattable<node, char>
 
-void add_nodes(const std::unordered_map<node, std::vector<node>>& graph, const std::string& input_file) {
-    std::ofstream file(input_file, std::ios::app);
+void add_nodes(const std::unordered_map<node, std::vector<node>>& graph, const std::string& input_file, std::optional<int> buffer_size_in_bytes) {
+    std::FILE* file = fopen(input_file.c_str(), "a");
 
-    std::vector<node> NodeName;
-    std::vector<std::vector<node>> NodeConnects;
+    int buf_size;
+    std::string write_buffer;
 
-    for (auto const& [key, value] : graph) {
-        NodeName.push_back(key);
-        NodeConnects.push_back(value);
+    if (!buffer_size_in_bytes.has_value()) {
+        buf_size = 64 * 1024;
+        write_buffer.reserve(64 * 1024);
+    } else {
+        buf_size = buffer_size_in_bytes.value();
+        write_buffer.reserve(buf_size);
     }
 
+    for (const auto& [NodeName, NodeConnects] : graph) {
+        std::string connections = "";
 
-    for (int i = 0; i < graph.size(); i++) {
-        file << "Node " << NodeName[i] << "-> ";
-
-        for (size_t j = 0; j < NodeConnects[i].size(); j++) {
-            file << "Node " << NodeConnects[i][j];
-            if (j < NodeConnects[i].size() - 1) {
-                file << ", ";
+        for (size_t j = 0; j < NodeConnects.size(); j++) {
+            connections += std::format("Node {}", NodeConnects[j]);
+            if (j < NodeConnects.size() - 1) {
+                connections += ", ";
             }
         }
-        file << "\n";
+        write_buffer += std::format("Node {} -> {}\n", NodeName, connections);
+
+        if (write_buffer.size() >= buf_size) {
+            std::fwrite(write_buffer.data(), 1, write_buffer.size(), file);
+            write_buffer.clear();
+        }
     }
-    file.close();
+
+    if (!write_buffer.empty()) {
+        std::fwrite(write_buffer.data(), 1, write_buffer.size(), file);
+    }
+
+    std::fclose(file);
 }
 }

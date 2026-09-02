@@ -1,0 +1,160 @@
+#pragma once
+
+#ifndef GRAPHDB_HPP
+#define GRAPHDB_HPP
+
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include <concepts>
+#include <utility>
+#include <regex>
+#include <stack>
+#include <queue>
+#include <unordered_set>
+#include <utility>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <optional>
+#include <stdexcept>
+#include <print>
+#include <cstdio>
+#include <ranges>
+#include <format>
+
+namespace graphdb {
+    template<typename T>
+
+    concept Number = std::integral<T> || std::floating_point<T>;
+
+    template<typename node>
+        requires std::formattable<node, char>
+    void create_graph(const std::unordered_map<node, std::vector<node> > &graph, const std::string &output_file, std::optional<int> buffer_size_in_bytes = std::nullopt);
+
+    template<typename node>
+        requires std::formattable<node, char>
+    void add_nodes(const std::unordered_map<node, std::vector<node> > &graph, const std::string &input_file, std::optional<int> buffer_size_in_bytes = std::nullopt);
+
+    inline void delete_instances(const std::string &node_to_delete, const std::string &input_file);
+
+    void print_graph(const std::string &filename);
+
+    void graphlib_version();
+
+    template<typename node, typename weights>
+        requires Number<weights> && std::formattable<node, char> && std::formattable<weights, char>
+    void create_graph(const std::unordered_map<node, std::vector<std::pair<node, weights> > > &graph,
+                      const std::string &output_file, std::optional<int> buffer_size_in_bytes = std::nullopt);
+
+    template<typename node, typename weights>
+        requires Number<weights> && std::formattable<node, char> && std::formattable<weights, char>
+    void add_nodes(const std::unordered_map<node, std::vector<std::pair<node, weights> > > &graph,
+                   const std::string &input_file, std::optional<int> buffer_size_in_bytes = std::nullopt);
+
+    inline void delete_instances_weighted(const std::string &node_to_delete, const std::string &input_file);
+
+    template<typename node, typename weights>
+        requires Number<weights>
+    std::optional<std::unordered_map<node, std::vector<std::pair<node, weights> > > > add_edge(
+        const std::vector<std::pair<node, weights> > &new_value, const node &key, const std::string &input_file);
+
+    template<typename node>
+    std::optional<std::unordered_map<node, std::vector<node> > > add_edge(
+        const std::vector<node> &new_value, const node &key, const std::string &input_file);
+
+    template<typename node>
+    std::unordered_map<node, std::vector<node> > parse(const std::string &input_file);
+
+    template<typename node, typename weights>
+        requires Number<weights>
+    std::unordered_map<node, std::vector<std::pair<node, weights> > > parse_weighted(const std::string &input_file);
+
+    template<typename node>
+    std::optional<std::vector<node> > get_neighbors(const node &key,
+                                                    std::unordered_map<node, std::vector<node> > &graph);
+
+    template<typename node, typename weights>
+    std::optional<std::vector<node> > get_neighbors(const node &key,
+                                                    std::unordered_map<node, std::vector<std::pair<node, weights> > > &
+                                                    graph);
+
+    template<typename node>
+    std::vector<node> dfs_algorithm(const node &starting_value, const std::string &input_file);
+
+    template<typename node>
+    std::vector<node> bfs_algorithm(const node &starting_node, const std::string &input_file);
+
+    template<typename node, typename weights>
+
+        requires Number<weights>
+    std::vector<node> dijkstras_algorithm(const node starting_node, const std::string &input_file);
+
+    // In memory
+    template<typename node, typename weights>
+        requires Number<weights>
+    std::optional<std::unordered_map<node, std::vector<std::pair<node, weights> > > > add_edge(
+        const std::vector<std::pair<node, weights> > &new_value, const node &key,
+        std::unordered_map<node, std::vector<std::pair<node, weights> > > &graph);
+
+    template<typename node>
+    std::optional<std::unordered_map<node, std::vector<node> > > add_edge(
+        const std::vector<node> &new_value, const node &key, std::unordered_map<node, std::vector<node> > &graph);
+
+    template<typename node>
+    std::vector<node> bfs_algorithm(const node &starting_node, std::unordered_map<node, std::vector<node> > &graph);
+
+    template<typename node>
+    std::vector<node> dfs_algorithm(const node &starting_value,
+                                    const std::unordered_map<node, std::vector<node> > &graph);
+
+    template<typename node, typename weights>
+        requires Number<weights>
+    std::vector<node> dijkstras_algorithm(const node starting_node,
+                                          std::unordered_map<node, std::vector<std::pair<node, weights> > > &graph);
+
+    template<typename node, typename weights>
+        requires Number<weights>
+    std::optional<std::unordered_map<node, std::vector<std::pair<node, weights> > > > undirected_connect(
+        std::unordered_map<node, std::vector<std::pair<node, weights> > > &graph, node key1, node key2,
+        std::string input_file);
+
+    template<typename node, typename weights>
+        requires Number<weights>
+    std::optional<std::unordered_map<node, std::vector<std::pair<node, weights> > > > undirected_connect(
+        node key1, node key2, std::string input_file);
+
+    template<typename node>
+    std::optional<std::unordered_map<node, std::vector<node> > > undirected_connect(
+        std::unordered_map<node, std::vector<node> > &graph, node key1, node key2, std::string input_file);
+
+    template<typename node>
+    std::optional<std::unordered_map<node, std::vector<node> > > undirected_connect(
+        node key1, node key2, std::string input_file);
+}
+
+#include "../detail/txt_to_un_map.tpp"
+#include "../detail/txt_to_un_map_weighted.tpp"
+
+#include "../detail/get_neighbors.tpp"
+#include "../detail/get_neighbors_weighted.tpp"
+#include "../detail/add_nodes.tpp"
+#include "../detail/add_nodes_weighted.tpp"
+#include "../detail/create_graph.tpp"
+#include "../detail/create_graph_weighted.tpp"
+#include "../detail/delete_nodes.tpp"
+#include "../detail/delete_nodes_weighted.tpp"
+#include "../detail/add_edges.tpp"
+#include "../detail/add_edges_weighted.tpp"
+
+#include "../detail/dfs.tpp"
+#include "../detail/bfs.tpp"
+#include "../detail/dijkstra.tpp"
+
+#include "../detail/undirected_2_edges.tpp"
+#include "../detail/undirected_2_edges_weighted.tpp"
+
+#include "../detail/print_graph.tpp"
+#include "../detail/print_version.tpp"
+
+#endif

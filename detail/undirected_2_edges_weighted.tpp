@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
 
 template <typename node, typename weights>
 

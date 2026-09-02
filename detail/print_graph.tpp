@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
 
 inline void print_graph(const std::string& filename) {
     std::string line;

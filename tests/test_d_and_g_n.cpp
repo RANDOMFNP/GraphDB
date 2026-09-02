@@ -17,18 +17,25 @@
 #include <algorithm>
 #include <random>
 #include <stdexcept>
-#include <atomic>
 #include <chrono>
+#include <filesystem>
 
 using namespace std;
 
-#include "graphlib.hpp"
+#include "graphdb.hpp"
 
 static inline string unique_temp_path_local(const string& name) {
     const auto now = chrono::steady_clock::now().time_since_epoch().count();
-    static atomic<uint64_t> counter{0};
-    const auto id = counter.fetch_add(1);
-    return "/tmp/graphlib_" + name + "_" + to_string(now) + "_" + to_string(id) + ".txt";
+    static uint64_t counter = 0;
+    const auto id = counter++;
+    const auto dir = std::filesystem::temp_directory_path();
+    return (dir / ("graphdb_" + name + "_" + to_string(now) + "_" + to_string(id) + ".txt")).string();
+}
+
+void check_true(bool condition, const string& message) {
+    if (!condition) {
+        throw runtime_error("ASSERTION FAILED: " + message);
+    }
 }
 
 template<typename V>
@@ -41,7 +48,26 @@ bool same_vector_contents(const vector<V>& actual, const vector<V>& expected) {
     return a == e;
 }
 
-// local Dijkstra implemented the same way as graphlib::dijkstras_algorithm
+template<typename K, typename V>
+bool same_graph(const unordered_map<K, vector<pair<K, V>>>& actual,
+                const unordered_map<K, vector<pair<K, V>>>& expected) {
+    if (actual.size() != expected.size()) return false;
+
+    for (const auto& [key, value] : expected) {
+        const auto it = actual.find(key);
+        if (it == actual.end()) return false;
+
+        if (it->second.size() != value.size()) return false;
+        vector<pair<K, V>> a = it->second;
+        vector<pair<K, V>> e = value;
+        sort(a.begin(), a.end());
+        sort(e.begin(), e.end());
+        if (a != e) return false;
+    }
+    return true;
+}
+
+// local Dijkstra implemented the same way as graphdb::dijkstras_algorithm
 vector<int> local_dijkstra(const unordered_map<int, vector<pair<int,int>>>& graph, int start) {
     const long long INF = (1LL<<60);
     unordered_map<int,long long> dist;
@@ -102,7 +128,7 @@ int run_d_and_g_n_tests() {
                 int pick_idx = rng() % ug.size();
                 auto itg = ug.begin(); advance(itg, pick_idx);
                 int key = itg->first;
-                auto res = graphlib::get_neighbors<int>(key, ug);
+                auto res = graphdb::get_neighbors<int>(key, ug);
                 if (!res.has_value() || !same_vector_contents(res.value(), ug[key])) {
                     cerr << "get_neighbors (unweighted) mismatch on iteration " << it << "\n";
                     return 2;
@@ -125,7 +151,7 @@ int run_d_and_g_n_tests() {
                 int pick_idx = rng() % wg.size();
                 auto itw = wg.begin(); advance(itw, pick_idx);
                 int key = itw->first;
-                auto got = graphlib::get_neighbors<int,int>(key, wg);
+                auto got = graphdb::get_neighbors<int,int>(key, wg);
                 vector<int> expected;
                 for (const auto &p : wg[key]) expected.push_back(p.first);
                 if (!got.has_value() || !same_vector_contents(got.value(), expected)) {
@@ -141,17 +167,19 @@ int run_d_and_g_n_tests() {
                 }
             }
 
-            // Dijkstra: write to file, call library dijkstra and compare order with local implementation
+            // Read the file once, do the real work in memory, and write the final state back at the end.
             const string file = unique_temp_path_local("dijk");
-            graphlib::create_graph<int,int>(wg, file);
+            graphdb::create_graph<int,int>(wg, file);
+            auto working = graphdb::parse_weighted<int,int>(file);
+            check_true(same_graph(working, wg), "dijkstra startup parse mismatch");
 
-            if (!wg.empty()) {
-                int pick_idx = rng() % wg.size();
-                auto itw = wg.begin(); advance(itw, pick_idx);
+            if (!working.empty()) {
+                int pick_idx = rng() % working.size();
+                auto itw = working.begin(); advance(itw, pick_idx);
                 int start = itw->first;
 
-                auto lib_order = graphlib::dijkstras_algorithm<int,int>(start, wg);
-                auto local_order = local_dijkstra(wg, start);
+                auto lib_order = graphdb::dijkstras_algorithm<int,int>(start, working);
+                auto local_order = local_dijkstra(working, start);
 
                 if (lib_order != local_order) {
                     cerr << "dijkstra ordering mismatch on iteration " << it << "\n";
@@ -161,6 +189,8 @@ int run_d_and_g_n_tests() {
                     remove(file.c_str());
                     return 4;
                 }
+
+                graphdb::create_graph<int,int>(working, file);
             }
 
             remove(file.c_str());

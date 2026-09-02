@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
 
 // Derivative work from: https://www.phoenixdata.ai/glossary/breadth-first-search-bfs
 

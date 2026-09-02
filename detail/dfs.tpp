@@ -1,6 +1,6 @@
 // Derivative work from: https://www.phoenixdata.ai/glossary/depth-first-search-dfs
 
-namespace graphlib {
+namespace graphdb {
 
 template<typename node>
 

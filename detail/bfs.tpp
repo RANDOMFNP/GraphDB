@@ -1,6 +1,6 @@
 // CREDITS: https://www.phoenixdata.ai/glossary/breadth-first-search-bfs
 
-namespace graphlib {
+namespace graphdb {
 
 template<typename node>
 

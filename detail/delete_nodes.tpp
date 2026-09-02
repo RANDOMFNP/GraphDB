@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
 
 inline void delete_instances(const std::string& node_to_delete, const std::string& input_file) {
     std::vector<std::string> lines; 
@@ -18,12 +18,12 @@ inline void delete_instances(const std::string& node_to_delete, const std::strin
     }
     in.close();
 
-    std::ofstream out(input_file);
+    std::FILE* file = fopen(input_file.c_str(), "w");
     for (const std::string& remaining_line : lines) {
         if (!remaining_line.empty()) {
-            out << remaining_line << "\n";
+            std::print(file, "{}\n", remaining_line);
         }
     }
-    out.close();
+    std::fclose(file);
 }
 }

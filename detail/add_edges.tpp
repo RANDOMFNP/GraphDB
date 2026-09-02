@@ -1,4 +1,4 @@
-namespace graphlib {
+namespace graphdb {
     
 template<typename node>
 
@@ -28,7 +28,6 @@ std::optional<std::unordered_map<node, std::vector<node>>> add_edge(const std::v
     auto g_it = graph.find(key);
 
     if (g_it == graph.end()) {
-        std::cout << "Key doesnt exist" << "\n";
         return std::nullopt;
     }
 

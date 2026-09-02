@@ -1,38 +1,36 @@
-# Graphlib 🇬
-Graphlib is a C++ library that empowers users to create and edit graphs!
+# graphdb 🇬
+GraphDB is a C++ library that empowers users to create and edit graphs!
 
-If you want to contribute to GRAPHLIB, check out the CONTRIBUTING.md file!
+If you want to contribute to GRAPHDB, check out the CONTRIBUTING.md file!
 
 If this product helped you, please leave a star!
 If it doesn't, tell me whats wrong, I respond to issues within 1-3 days!
 
 ### READEME.md UPDATES EVERY DAY AFTER A VERSION IS PUBLISHED
 
-## NOTE: Within the next week, we will slowly be transitioning to C++23/26 stuff with C++26 the minimum requirement.
-
 ## NEWS
 Switched license from AGPL v3 to Apache 2.0
 
 ## Great first issues
 Here I will post some of the best first issues I see and its status
-* https://github.com/RANDOMFNP/Graphlib/issues/8 -- Bellman-Ford
-* https://github.com/RANDOMFNP/Graphlib/issues/9 -- A*
-* https://github.com/RANDOMFNP/Graphlib/issues/10 -- README.md
+* https://github.com/RANDOMFNP/graphdb/issues/8 -- Bellman-Ford
+* https://github.com/RANDOMFNP/graphdb/issues/9 -- A*
+* https://github.com/RANDOMFNP/graphdb/issues/10 -- README.md
 
-## Importing Graphlib 📦
+## Importing graphdb 📦
 
-For most applications, `#include "graphlib.hpp"` will suffice.
+For most applications, `#include "graphdb.hpp"` will suffice.
 
 ## Linking without CMake 📦
 
 ### Using g++
 
-Example usage: `g++ program.cpp -I graphlib/include/ -I graphlib/detail/ -o program`, make sure to include graphlib/include/ and graphlib/detail/
+Example usage: `g++ program.cpp -I graphdb/include/ -I graphdb/detail/ -o program`, make sure to include graphdb/include/ and graphdb/detail/
 __NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if you are on too old of a g++ compiler, we recommend g++ 12 as a minimum
 
 ### Using clang
 
-Example usage: `clang++ program.cpp -I graphlib/include/ -I ./graphlib/detail/ -o program`, make sure to include graphlib/include/ and graphlib/detail/
+Example usage: `clang++ program.cpp -I graphdb/include/ -I ./graphdb/detail/ -o program`, make sure to include graphdb/include/ and graphdb/detail/
 __NOTE:__ This is C++ 20 (but soon to be 23) library and will not function if you are on too old of a clang compiler, we recommend clang 14 as a minimum
 
 ### Using MSVC
@@ -45,6 +43,8 @@ __NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if 
 * node: AnyType
 * weight: int/float/numerical
 
+## NOTE THIS USES THE `graphdb::` namespace so prefix everything here with `graphdb::`
+## This list includes the return type too.
 
 ### `void add_nodes(std::unordered_map<node, std::vector<node>> graph, std::string input_file);`
 Adds a node to a graph.
@@ -55,8 +55,8 @@ Deletes instances of a node.
 ### `void print_graph(std::string filename);`
 Prints the graph.
 
-### `void graphlib_version();`
-Prints the graphlib version.
+### `void graphdb_version();`
+Prints the graphdb version.
 
 
 ### `void create_graph(std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, std::string output_file);`
@@ -123,7 +123,7 @@ Connects 2 weighted nodes together IN MEMORY.
 Connects 2 weighted nodes together.
 
 
-### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(std::unordered_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);`
+### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(std::unordered_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);'
 Connects 2 nodes together IN MEMORY.
 ### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file);`'
 Connects 2 nodes together.
