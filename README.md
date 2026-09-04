@@ -46,7 +46,7 @@ __NOTE:__ This is a C++ 20 (but soon to be 23) library and will not function if 
 ## NOTE THIS USES THE `graphdb::` namespace so prefix everything here with `graphdb::`
 ## This list includes the return type too.
 
-### `void add_nodes(std::unordered_map<node, std::vector<node>> graph, std::string input_file);`
+### `void add_nodes(graphdb::flat_map<node, std::vector<node>> graph, std::string input_file);`
 Adds a node to a graph.
 
 ### `void delete_instances(std::string node_to_delete, std::string input_file);`
@@ -59,31 +59,31 @@ Prints the graph.
 Prints the graphdb version.
 
 
-### `void create_graph(std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, std::string output_file);`
+### `void create_graph(graphdb::flat_map<node, std::vector<std::pair<node, weights>>> graph, std::string output_file);`
 Creates the initial graph for weighted graphs.
 
-### `void create_graph(std::unordered_map<node, std::vector<node>> graph, std::string output_file);`
+### `void create_graph(graphdb::flat_map<node, std::vector<node>> graph, std::string output_file);`
 Creates the initial graph for unweighted graphs.
 
-### `void add_nodes(std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, std::string input_file);`
+### `void add_nodes(graphdb::flat_map<node, std::vector<std::pair<node, weights>>> graph, std::string input_file);`
 Adds a set of nodes, weights and connections to the graph to the file.
 
-### `void add_nodes(std::unordered_map<node, std::vector<node>> graph, std::string input_file);`
+### `void add_nodes(graphdb::flat_map<node, std::vector<node>> graph, std::string input_file);`
 Adds a set of nodes and their connections to the graph
 
 ### `void delete_instances_weighted(std::string node_to_delete, std::string input_file);`
 Deletes all instances of a certain node in weighted graphs.
 
-### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::string input_file);`
+### `std::optional<graphdb::flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::string input_file);`
 Adds an edge to a weighted graph.
 
-### `std::optional<std::unordered_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, std::string input_file);`
+### `std::optional<graphdb::flat_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, std::string input_file);`
 Adds an edge to an unweighted graph
 
-### `std::unordered_map<node, std::vector<node>> parse(std::string input_file);`
+### `graphdb::flat_map<node, std::vector<node>> parse(std::string input_file);`
 Parses a file.
 
-### `std::unordered_map<node, std::vector<std::pair<node, weights>>> parse_weighted(std::string input_file);`
+### `graphdb::flat_map<node, std::vector<std::pair<node, weights>>> parse_weighted(std::string input_file);`
 Parses a weighted graph file.
 
 
@@ -96,34 +96,34 @@ Runs Dijkstra's algorithm over a certain graph.
 
 ## In memory
 
-### `std::optional<std::vector<node>> get_neighbors(node key, std::unordered_map<node, std::vector<node>> graph);`
+### `std::optional<std::vector<node>> get_neighbors(node key, graphdb::flat_map<node, std::vector<node>> graph);`
 Gets the neighbors of a key IN MEMORY.
 
-### `std::optional<std::vector<node>> get_neighbors(node key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph);`
+### `std::optional<std::vector<node>> get_neighbors(node key, graphdb::flat_map<node, std::vector<std::pair<node, weights>>> graph);`
 Gets the neighbors of a weighted key IN MEMORY.
 
-### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph);`
+### `std::optional<graphdb::flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, graphdb::flat_map<node, std::vector<std::pair<node, weights>>> graph);`
 Adds a weighted edge IN MEMORY.
 
-### `std::optional<std::unordered_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, std::unordered_map<node, std::vector<node>> graph);`
+### `std::optional<graphdb::flat_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, graphdb::flat_map<node, std::vector<node>> graph);`
 Adds an unweighted edge IN MEMORY.
 
-### `std::vector<node> bfs_algorithm(node starting_node, std::unordered_map<node, std::vector<node>> graph);`
+### `std::vector<node> bfs_algorithm(node starting_node, graphdb::flat_map<node, std::vector<node>> graph);`
 Runs BFS IN MEMORY.
-### `std::vector<node> dfs_algorithm(node starting_value, std::unordered_map<node, std::vector<node>> graph);`
+### `std::vector<node> dfs_algorithm(node starting_value, graphdb::flat_map<node, std::vector<node>> graph);`
 Runs DFS IN MEMORY.
-### std::vector<node> dijkstras_algorithm(node starting_node, std::unordered_map<node, std::vector<std::pair<node, weights>>> graph);`
+### std::vector<node> dijkstras_algorithm(node starting_node, graphdb::flat_map<node, std::vector<std::pair<node, weights>>> graph);`
 Runs Dijkstra's algorithm IN MEMORY.
 
 ## Undirected
 
-### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(std::unordered_map<node, std::vector<std::pair<node, weights>>> graph, node key1, node key2, std::string input_file);`
+### `std::optional<graphdb::flat_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(graphdb::flat_map<node, std::vector<std::pair<node, weights>>> graph, node key1, node key2, std::string input_file);`
 Connects 2 weighted nodes together IN MEMORY.
-### `std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(node key1, node key2, std::string input_file);`
+### `std::optional<graphdb::flat_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(node key1, node key2, std::string input_file);`
 Connects 2 weighted nodes together.
 
 
-### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(std::unordered_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);'
+### `std::optional<graphdb::flat_map<node, std::vector<node>>> undirected_connect(graphdb::flat_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);'
 Connects 2 nodes together IN MEMORY.
-### `std::optional<std::unordered_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file);`'
+### `std::optional<graphdb::flat_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file);`'
 Connects 2 nodes together.
