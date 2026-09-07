@@ -14,7 +14,7 @@ target_sources(graphlib
 
 target_sources(graphlib PUBLIC
         FILE_SET HEADERS
-        BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
+        BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/detail
         FILES
         #Include
         ${CMAKE_CURRENT_SOURCE_DIR}/include/graphdb.hpp
