@@ -54,5 +54,7 @@ cmake --version == 3.30
 ### COMPILERS
 
 g++ --version == >15
+
 clang++ -version == >19
+
 cl == > 19.50
