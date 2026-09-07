@@ -14,79 +14,89 @@ jobs:
 
     strategy:
       fail-fast: false
+
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        build_type: [Release]
-        c_compiler: [gcc, clang, cl]
         include:
-          # Ubuntu GCC 14
+          # Ubuntu + GCC 14
           - os: ubuntu-latest
             c_compiler: gcc-14
             cpp_compiler: g++-14
+            build_type: Release
 
-          # Ubuntu Clang 18
+          # Ubuntu + Clang 18
           - os: ubuntu-latest
             c_compiler: clang-18
             cpp_compiler: clang++-18
+            build_type: Release
 
-          # Windows MSVC
+          # Windows + MSVC
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
-
-        exclude:
-          - os: windows-latest
-            c_compiler: gcc
-
-          - os: windows-latest
-            c_compiler: clang
-
-          - os: ubuntu-latest
-            c_compiler: cl
+            build_type: Release
 
     steps:
+
+    # Check out the repository
     - uses: actions/checkout@v4
 
-    # Set up Developer Command Prompt explicitly for MSVC (cl) on Windows.
+
+    # Set up Developer Command Prompt for MSVC on Windows
     - name: Set up MSVC Developer Command Prompt
       if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1
 
-    # Set reusable strings.
+
+    # Set reusable strings
     - name: Set reusable strings
       id: strings
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    # Show which compiler is being used.
+
+    # Show the compiler version
     - name: Show compiler version
       shell: bash
       run: |
+        echo "C compiler: ${{ matrix.c_compiler }}"
+        echo "C++ compiler: ${{ matrix.cpp_compiler }}"
+
         if [ "${{ matrix.c_compiler }}" = "gcc-14" ]; then
+          gcc-14 --version
           g++-14 --version
         elif [ "${{ matrix.c_compiler }}" = "clang-18" ]; then
+          clang-18 --version
           clang++-18 --version
         else
           cl
         fi
 
-    # Configure CMake using C++23.
+
+    # Configure CMake
+    #
+    # Ninja is a single-configuration generator, so the Release
+    # configuration is selected here instead of using --config later.
     - name: Configure CMake
+      shell: bash
       run: >
-        cmake -G Ninja -B ${{ steps.strings.outputs.build-output-dir }}
+        cmake -G Ninja
+        -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -DCMAKE_CXX_STANDARD=23
         -DCMAKE_CXX_STANDARD_REQUIRED=ON
+        -DCMAKE_CXX_EXTENSIONS=OFF
         -S ${{ github.workspace }}
 
-    # Build the project.
-    - name: Build
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-    # Run the tests.
+    # Build the project
+    - name: Build
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --parallel
+
+
+    # Run the tests
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: ctest --build-config ${{ matrix.build_type }} --output-on-failure
+      run: ctest --output-on-failure
