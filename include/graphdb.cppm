@@ -1,7 +1,4 @@
-#pragma once
-
-#ifndef GRAPHDB_HPP
-#define GRAPHDB_HPP
+module;
 
 #include <unordered_map>
 #include <vector>
@@ -25,7 +22,9 @@
 #include <mutex>
 #include <shared_mutex>
 
-namespace graphdb {
+export module graphdb;
+
+export namespace graphdb {
     template<typename K, typename V>
     class flat_map {
     private:
@@ -320,7 +319,6 @@ namespace graphdb {
     void save(const flat_map<node, std::vector<std::pair<node, weights> > > &graph, const std::string &input_file,
               std::optional<int> buffer_size_in_bytes = std::nullopt);
 }
-
 #include "../detail/txt_to_un_map.tpp"
 #include "../detail/txt_to_un_map_weighted.tpp"
 
@@ -345,6 +343,3 @@ namespace graphdb {
 #include "../detail/print_graph.tpp"
 #include "../detail/print_version.tpp"
 #include "../detail/save.tpp"
-
-
-#endif

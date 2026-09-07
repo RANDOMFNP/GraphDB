@@ -1,3 +1,3 @@
 inline void graphdb_version() {
-    std::cout << "Version 5" << '\n';
+    std::cout << "Version BETA 5.1" << '\n';
 }

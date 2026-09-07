@@ -1,11 +1,18 @@
-cmake_minimum_required(VERSION 3.26.0)
-project(graphlib VERSION 0.1.0 LANGUAGES C CXX)
+cmake_minimum_required(VERSION 3.28.0)
+project(graphlib VERSION 0.5.1 LANGUAGES C CXX)
 
 option(BUILD_TESTS "Build project tests" ON)
 
-add_library(graphlib INTERFACE)
+add_library(graphlib)
 
-target_sources(graphlib INTERFACE
+target_sources(graphlib
+        PUBLIC
+        FILE_SET CXX_MODULES
+        FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/graphdb.cppm
+)
+
+target_sources(graphlib PUBLIC
         FILE_SET HEADERS
         BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
         FILES
@@ -33,11 +40,13 @@ target_sources(graphlib INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/detail/txt_to_un_map_weighted.tpp
         ${CMAKE_CURRENT_SOURCE_DIR}/detail/undirected_2_edges.tpp
         ${CMAKE_CURRENT_SOURCE_DIR}/detail/undirected_2_edges_weighted.tpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/detail/save.tpp
 )
 
-target_compile_features(graphlib INTERFACE cxx_std_23)
+target_compile_features(graphlib PUBLIC cxx_std_23)
 
-target_include_directories(graphlib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(graphlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/detail)
 
 if(BUILD_TESTS)
     include(CTest)
