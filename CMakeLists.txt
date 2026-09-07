@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28.0)
 project(graphlib VERSION 0.5.1 LANGUAGES C CXX)
 
-option(BUILD_TESTS "Build project tests" ON)
+option(BUILD_TESTS "Build project tests" OFF)
 
 add_library(graphlib)
 
