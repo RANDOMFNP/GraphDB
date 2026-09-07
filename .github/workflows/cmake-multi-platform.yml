@@ -10,13 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
 
       matrix:
         include:
+
           # Ubuntu + GCC 14
           - os: ubuntu-latest
             c_compiler: gcc-14
@@ -35,28 +35,23 @@ jobs:
             cpp_compiler: cl
             build_type: Release
 
+    runs-on: ${{ matrix.os }}
+
     steps:
 
-    # Check out the repository
-    - uses: actions/checkout@v4
+    # Download repository
+    - name: Checkout
+      uses: actions/checkout@v4
 
 
-    # Set up Developer Command Prompt for MSVC on Windows
-    - name: Set up MSVC Developer Command Prompt
+    # Set up MSVC environment
+    - name: Set up MSVC
       if: matrix.os == 'windows-latest'
       uses: ilammy/msvc-dev-cmd@v1
 
 
-    # Set reusable strings
-    - name: Set reusable strings
-      id: strings
-      shell: bash
-      run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
-
-    # Show the compiler version
-    - name: Show compiler version
+    # Show compiler version
+    - name: Show compiler
       shell: bash
       run: |
         echo "C compiler: ${{ matrix.c_compiler }}"
@@ -65,9 +60,11 @@ jobs:
         if [ "${{ matrix.c_compiler }}" = "gcc-14" ]; then
           gcc-14 --version
           g++-14 --version
+
         elif [ "${{ matrix.c_compiler }}" = "clang-18" ]; then
           clang-18 --version
           clang++-18 --version
+
         else
           cl
         fi
@@ -75,28 +72,20 @@ jobs:
 
     # Configure CMake
     #
-    # Ninja is a single-configuration generator, so the Release
-    # configuration is selected here instead of using --config later.
+    # -S . means the current repository directory.
+    # This avoids Windows/Bash path conversion problems.
     - name: Configure CMake
-      shell: bash
-      run: >
-        cmake -G Ninja
-        -B ${{ steps.strings.outputs.build-output-dir }}
-        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
-        -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
-        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        -DCMAKE_CXX_STANDARD=23
-        -DCMAKE_CXX_STANDARD_REQUIRED=ON
-        -DCMAKE_CXX_EXTENSIONS=OFF
-        -S ${{ github.workspace }}
+      run: cmake -G Ninja -B build -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -DCMAKE_C_COMPILER=${{ matrix.c_compiler }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_CXX_STANDARD=23 -DCMAKE_CXX_STANDARD_REQUIRED=ON -DCMAKE_CXX_EXTENSIONS=OFF -S .
 
 
-    # Build the project
+    # Build
+    #
+    # Ninja is single-configuration, so --config is unnecessary.
     - name: Build
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --parallel
+      run: cmake --build build --parallel
 
 
-    # Run the tests
+    # Test
     - name: Test
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      working-directory: build
       run: ctest --output-on-failure
