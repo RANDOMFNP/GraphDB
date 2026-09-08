@@ -43,15 +43,11 @@ Adds a set of nodes and their connections to the graph
 
 Deletes all instances of a certain node in weighted graphs.
 
-###
-
-`std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::string input_file);`
+### `std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, std::string input_file);`
 
 Adds an edge to a weighted graph.
 
-###
-
-`std::optional<flat_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, std::string input_file);`
+### `std::optional<flat_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, std::string input_file);`
 
 Adds an edge to an unweighted graph
 
@@ -81,21 +77,15 @@ Runs Dijkstra's algorithm over a certain graph.
 
 Gets the neighbors of a key IN MEMORY.
 
-###
-
-`std::optional<std::vector<node>> get_neighbors(node key, flat_map<node, std::vector<std::pair<node, weights>>> graph);`
+### `std::optional<std::vector<node>> get_neighbors(node key, flat_map<node, std::vector<std::pair<node, weights>>> graph);`
 
 Gets the neighbors of a weighted key IN MEMORY.
 
-###
-
-`std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, flat_map<node, std::vector<std::pair<node, weights>>> graph);`
+### `std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(std::vector<std::pair<node, weights>> new_value, node key, flat_map<node, std::vector<std::pair<node, weights>>> graph);`
 
 Adds a weighted edge IN MEMORY.
 
-###
-
-`std::optional<flat_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, flat_map<node, std::vector<node>> graph);`
+### `std::optional<flat_map<node, std::vector<node>>> add_edge(std::vector<node> new_value, node key, flat_map<node, std::vector<node>> graph);`
 
 Adds an unweighted edge IN MEMORY.
 
@@ -107,33 +97,26 @@ Runs BFS IN MEMORY.
 
 Runs DFS IN MEMORY.
 
-###
-`std::vector<node> dijkstras_algorithm (node starting_node, flat_map<node, std::vector<std::pair<node, weights>>> graph);`
+### `std::vector<node> dijkstras_algorithm (node starting_node, flat_map<node, std::vector<std::pair<node, weights>>> graph);`
 
 Runs Dijkstra's algorithm IN MEMORY.
 
 ## Undirected
 
-###
-
-`std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(flat_map<node, std::vector<std::pair<node, weights>>> graph, node key1, node key2, std::string input_file);`
+### `std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(flat_map<node, std::vector<std::pair<node, weights>>> graph, node key1, node key2, std::string input_file);`
 
 Connects 2 weighted nodes together IN MEMORY.
 
-###
-
-`std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(node key1, node key2, std::string input_file);`
+### `std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> undirected_connect(node key1, node key2, std::string input_file);`
 
 Connects 2 weighted nodes together.
 
-###
-`std::optional<flat_map<node, std::vector<node>>> undirected_connect (flat_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);`
+### `std::optional<flat_map<node, std::vector<node>>> undirected_connect (flat_map<node, std::vector<node>> graph, node key1, node key2, std::string input_file);`
 
 Connects 2 nodes together IN MEMORY.
 
-###
 
-`std::optional<flat_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file);`
+### `std::optional<flat_map<node, std::vector<node>>> undirected_connect(node key1, node key2, std::string input_file);`
 
 Connects 2 nodes together.
 
