@@ -2,8 +2,8 @@ namespace graphdb {
 
 template<typename node>
 
-std::unordered_map<node, std::vector<node>> parse(const std::string& input_file) {
-    std::unordered_map<node, std::vector<node>> output_unordered_map;
+flat_map<node, std::vector<node>> parse(const std::string& input_file) {
+    flat_map<node, std::vector<node>> output_unordered_map;
     std::ifstream file(input_file);
     std::string line;
 

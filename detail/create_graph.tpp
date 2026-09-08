@@ -3,7 +3,7 @@ namespace graphdb {
 template<typename node>
 
     requires std::formattable<node, char>
-void create_graph(const std::unordered_map<node, std::vector<node>>& graph, const std::string& output_file, std::optional<int> buffer_size_in_bytes) {
+void create_graph(const flat_map<node, std::vector<node>>& graph, const std::string& output_file, std::optional<int> buffer_size_in_bytes) {
 
     std::FILE* file = fopen(output_file.c_str(), "w");
 

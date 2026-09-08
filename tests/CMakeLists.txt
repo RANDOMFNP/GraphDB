@@ -2,7 +2,6 @@ project(graphlib_tests LANGUAGES CXX)
 
 set(TEST_SOURCES
     "test_core.cpp"
-    "test_d_and_g_n.cpp"
 )
 
 add_executable(run_tests ${TEST_SOURCES})

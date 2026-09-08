@@ -3,8 +3,8 @@ namespace graphdb {
 template<typename node, typename weights>
 
 requires Number<weights>
-std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, const std::string& input_file) {
-    std::unordered_map<node, std::vector<std::pair<node, weights>>> graph;
+std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, const std::string& input_file) {
+    flat_map<node, std::vector<std::pair<node, weights>>> graph;
     graph = parse_weighted<node, weights>(input_file);
     auto g_it = graph.find(key);
 
@@ -24,7 +24,7 @@ std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> a
 template<typename node, typename weights>
 
 requires Number<weights>
-std::optional<std::unordered_map<node, std::vector<std::pair<node, weights>>>> add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph) {
+std::optional<flat_map<node, std::vector<std::pair<node, weights>>>> add_edge(const std::vector<std::pair<node, weights>>& new_value, const node& key, flat_map<node, std::vector<std::pair<node, weights>>>& graph) {
     auto g_it = graph.find(key);
 
     if (g_it == graph.end()) {

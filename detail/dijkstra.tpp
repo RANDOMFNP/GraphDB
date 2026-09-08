@@ -6,11 +6,11 @@ template<typename node, typename weights>
 
 requires Number<weights>
 std::vector<node> dijkstras_algorithm(const node starting_node, const std::string& input_file) {
-    std::unordered_map<node, std::vector<std::pair<node, weights>>> graph;
+    flat_map<node, std::vector<std::pair<node, weights>>> graph;
     graph = parse_weighted<node, weights>(input_file);
 
     std::priority_queue<std::pair<weights, node>, std::vector<std::pair<weights, node>>, std::greater<std::pair<weights, node>>> q;
-    std::unordered_map<node, weights> visited;
+    flat_map<node, weights> visited;
     visited[starting_node] = 0;
     q.push(std::make_pair(0, starting_node));
 
@@ -50,9 +50,9 @@ std::vector<node> dijkstras_algorithm(const node starting_node, const std::strin
 template<typename node, typename weights>
 
 requires Number<weights>
-std::vector<node> dijkstras_algorithm(const node starting_node, std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph) {
+std::vector<node> dijkstras_algorithm(const node starting_node, flat_map<node, std::vector<std::pair<node, weights>>>& graph) {
     std::priority_queue<std::pair<weights, node>, std::vector<std::pair<weights, node>>, std::greater<std::pair<weights, node>>> q;
-    std::unordered_map<node, weights> visited;
+    flat_map<node, weights> visited;
     visited[starting_node] = 0;
     q.push(std::make_pair(0, starting_node));
 

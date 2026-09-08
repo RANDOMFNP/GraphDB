@@ -5,7 +5,7 @@ namespace graphdb {
 template<typename node>
 
 std::vector<node> bfs_algorithm(const node& starting_node, const std::string& input_file) {
-    std::unordered_map<node, std::vector<node>> graph;
+    flat_map<node, std::vector<node>> graph;
     graph = parse<node>(input_file);
 
     std::queue<node> q;
@@ -38,7 +38,7 @@ std::vector<node> bfs_algorithm(const node& starting_node, const std::string& in
 // Added in-memory abilities
 template<typename node>
 
-std::vector<node> bfs_algorithm(const node& starting_node, std::unordered_map<node, std::vector<node>>& graph) {
+std::vector<node> bfs_algorithm(const node& starting_node, flat_map<node, std::vector<node>>& graph) {
     
     std::queue<node> q;
     std::unordered_set<node> visited;

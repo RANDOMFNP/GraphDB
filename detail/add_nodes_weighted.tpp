@@ -2,7 +2,7 @@ namespace graphdb {
 
 template<typename node, typename weights>
     requires Number<weights> && std::formattable<node, char> && std::formattable<weights, char>
-void add_nodes(const std::unordered_map<node, std::vector<std::pair<node, weights>>>& graph, const std::string& input_file, std::optional<int> buffer_size_in_bytes) {
+void add_nodes(const flat_map<node, std::vector<std::pair<node, weights>>>& graph, const std::string& input_file, std::optional<int> buffer_size_in_bytes) {
     std::FILE* file = fopen(input_file.c_str(), "a");
 
     int buf_size;

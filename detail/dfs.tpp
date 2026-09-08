@@ -7,7 +7,7 @@ template<typename node>
 std::vector<node> dfs_algorithm(const node& starting_value, const std::string& input_file) {
     std::unordered_set<node> visited;
     std::stack<node> stack_of_numbers;
-    std::unordered_map<node, std::vector<node>> graph;
+    flat_map<node, std::vector<node>> graph;
     graph = parse<node>(input_file);
     
     stack_of_numbers.push(starting_value);
@@ -39,7 +39,7 @@ std::vector<node> dfs_algorithm(const node& starting_value, const std::string& i
 // Added in-memory abilities
 template<typename node>
 
-std::vector<node> dfs_algorithm(const node& starting_value, const std::unordered_map<node, std::vector<node>>& graph) {
+std::vector<node> dfs_algorithm(const node& starting_value, const flat_map<node, std::vector<node>>& graph) {
     std::unordered_set<node> visited;
     std::stack<node> stack_of_numbers;
     

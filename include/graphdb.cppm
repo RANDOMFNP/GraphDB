@@ -211,7 +211,7 @@ export namespace graphdb {
     void add_nodes(const flat_map<node, std::vector<node> > &graph, const std::string &input_file,
                    std::optional<int> buffer_size_in_bytes = std::nullopt);
 
-    inline void delete_instances(const std::string &node_to_delete, const std::string &input_file);
+    void delete_instances(const std::string &node_to_delete, const std::string &input_file);
 
     void print_graph(const std::string &filename);
 
@@ -227,7 +227,7 @@ export namespace graphdb {
     void add_nodes(const flat_map<node, std::vector<std::pair<node, weights> > > &graph,
                    const std::string &input_file, std::optional<int> buffer_size_in_bytes = std::nullopt);
 
-    inline void delete_instances_weighted(const std::string &node_to_delete, const std::string &input_file);
+    void delete_instances_weighted(const std::string &node_to_delete, const std::string &input_file);
 
     template<typename node, typename weights>
         requires Number<weights>

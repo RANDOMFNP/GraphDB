@@ -2,7 +2,7 @@ namespace graphdb {
     
 template<typename node>
 
-std::optional<std::vector<node>> get_neighbors(const node& key, std::unordered_map<node, std::vector<node>>& graph) {
+std::optional<std::vector<node>> get_neighbors(const node& key, flat_map<node, std::vector<node>>& graph) {
 
     auto g_it = graph.find(key);
 

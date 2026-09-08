@@ -3,8 +3,8 @@ namespace graphdb {
 template<typename node, typename weights>
 
 requires Number<weights>
-std::unordered_map<node, std::vector<std::pair<node, weights>>> parse_weighted(const std::string& input_file) {
-    std::unordered_map<node, std::vector<std::pair<node, weights>>> output_unordered_map;
+flat_map<node, std::vector<std::pair<node, weights>>> parse_weighted(const std::string& input_file) {
+    flat_map<node, std::vector<std::pair<node, weights>>> output_unordered_map;
     std::ifstream file(input_file);
     std::string line;
     

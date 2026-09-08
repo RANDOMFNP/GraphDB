@@ -2,8 +2,8 @@ namespace graphdb {
     
 template<typename node>
 
-std::optional<std::unordered_map<node, std::vector<node>>> add_edge(const std::vector<node>& new_value, const node& key, const std::string& input_file) {
-    std::unordered_map<node, std::vector<node>> graph;
+std::optional<flat_map<node, std::vector<node>>> add_edge(const std::vector<node>& new_value, const node& key, const std::string& input_file) {
+    flat_map<node, std::vector<node>> graph;
     graph = parse<node>(input_file);
         
     auto g_it = graph.find(key);
@@ -24,7 +24,7 @@ std::optional<std::unordered_map<node, std::vector<node>>> add_edge(const std::v
 // Added in-memory abilities
 template<typename node>
 
-std::optional<std::unordered_map<node, std::vector<node>>> add_edge(const std::vector<node>& new_value, const node& key, std::unordered_map<node, std::vector<node>>& graph) {
+std::optional<flat_map<node, std::vector<node>>> add_edge(const std::vector<node>& new_value, const node& key, flat_map<node, std::vector<node>>& graph) {
     auto g_it = graph.find(key);
 
     if (g_it == graph.end()) {
