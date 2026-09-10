@@ -7,8 +7,6 @@ If you want to contribute to GRAPHDB, check out the CONTRIBUTING.md file!
 If this product helped you, please leave a star!
 If it doesn't, tell me what's wrong, I respond to issues within 1-3 days!
 
-# UPDATE COMING FRIDAY
-
 ### READEME.md UPDATES EVERY DAY AFTER A VERSION IS PUBLISHED
 
 ## NEWS
